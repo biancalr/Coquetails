@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:g="http://xmlns.jcp.org/jsf/composite/custom"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <c:if test="#{loginCandidato.candidatoLogado==null}">
+        <script>
+            location.href = "loginUsuario.xhtml";
+        </script>
+    </c:if>
+    <h:body>
+        <g:createObject varClass="com.coquetails.coquetails.model.Usuario"
+                        varName="cadUsuario" varScope="session"/>
+        <b:growl delay="4000"/>
+        <b:form id="formCadUsuario">
+            <b:panel title="Informações do Usuario">
+                <b:panelGrid columns="3">
+                    <h:outputText value="Nome:"/>
+                    <b:inputText id="txtNome" value="#{cadUsuario.nome}"
+                                 required="true" required-message="Nome obrigatório"/>
+                    <b:message for="txtNome"/>
+                    
+                    <h:outputText value="CPF:"/>
+                    <b:inputText id="txtCpf" value="#{cadUsuario.cpf}"
+                                 required="true" required-message="CPF obrigatório"/>
+                    <b:message for="txtCpf"/>
+                    
+                    <h:outputText value="E-mail:"/>
+                    <b:inputText id="txtEmail" value="#{cadUsuario.email}"
+                                 required="true" required-message="Email obrigatório"/>
+                    <b:message for="txtEmail"/>
+                    
+                    <h:outputText value="Telefone 1:"/>
+                    <b:inputText id="txtFone1" value="#{cadUsuario.telefone1}"
+                                 required="true" required-message="Telefone 1 obrigatório"/>
+                    <b:message for="txtLogin"/>
+                    
+                    <h:outputText value="Telefone 2:"/>
+                    <b:inputText id="txtFone2" value="#{cadUsuario.telefone2}"
+                                 required="false"/>
+                    
+                    <h:outputText value="Login:"/>
+                    <b:inputText id="txtLogin" value="#{cadUsuario.login}"
+                                 required="true" required-message="Login obrigatório"/>
+                    <b:message for="txtLogin"/>
+                    
+                    <h:outputText value="Senha:"/>
+                    <b:inputSecret id="txtSenha" value="#{cadUsuario.Senha}"
+                                 required="true" required-message="Senha obrigatória"/>
+                    <b:message for="txtSenha"/>
+                    
+                    <h:outputText value="Confirma Senha:"/>
+                    <b:inputSecret id="txtConf" value="#{confirma}"
+                                 required="true" required-message="Confirmação da senha obrigatória"/>
+                    <b:message for="txtConf"/>
+                    
+                </b:panelGrid>
+                <p:commandButton value="Cadastrar" action="#{usuariosController.inserir(cadUsuario, confirma)}"
+            </b:panel>
+        </b:form>
+
+    </h:body>
+</html>
+

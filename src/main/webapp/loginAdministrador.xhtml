@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login Administrador</title>
+    </h:head>
+    <h:body>
+        <c:if test="${loginAdministradorController.admnistradorLogado != null}">
+            <script>location.href = 'indexAdministrador.xhtml';</script>
+        </c:if>
+
+        <b:growl id="gro" delay="4000"/>
+        <b:messages id="messages" show-detail="true" show-summary="true"/>
+
+        <p:dialog id="mainDialog" modal="false" draggable="false" visible="true"
+                  header="Realizar Login Administrador">
+            <b:form>
+                <b:panelGrid columns="2">
+                    <h:outputText value="Login:"/>
+                    <b:inputText value="#{login}"/>
+
+                    <h:outputText value="Senha:"/>
+                    <b:inputText value="#{senha}" type="password"/>
+
+                    <b:commandButton value="logar"
+                                     action="#{loginAdministradorController.
+                                               realizarLoginAdministrador(login, senha)}"
+                                     update=":gro :messages mainDialog"
+                                     look="info"/>
+                </b:panelGrid>
+            </b:form>
+        </p:dialog>
+
+    </h:body>
+</html>
+

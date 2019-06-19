@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Index Administrador</title>
+    </h:head>
+    <h:body>
+        <ui:include src="menuAdministrador.xhtml"/>
+
+        <c:if test="#{usuariosController.lerTudo() == null}">
+            <h1>Não há usuários cadastrados</h1>
+        </c:if>
+        
+        <c:if test="#{usuariosController.lerTudo() != null}">
+
+            <b:form id="formUsuarios">
+                <b:tabView activeIndex="#{usuariosController.mainTabControl}">
+                    <b:tab title="Usuarios Cadastrados">
+                        <b:dataTable id="tableUsuariosCadastrados" var="item"
+                                     value="#{usuariosController.lerTudo()}">
+                            <b:dataTableColumn value="#{item.login}"/>
+                            <b:dataTableColumn value="#{item.nome}"/>
+                            <b:dataTableColumn value="#{item.email}"/>
+                            <b:dataTableColumn value="#{item.telefone1}"/>
+                            <b:dataTableColumn value="#{item.telefone2}"/>
+                            <b:commandButton icon="search" update=":modalVisualizaUsuario"
+                                             oncomplete="$('#modalVisualizaUsuario').modal('show')">
+                                <f:setPropertyActionListener value="#{item}"
+                                                             target="#{usuariosController.selUsuario}"/>
+                            </b:commandButton>
+                        </b:dataTable>
+                    </b:tab>
+                </b:tabView>
+            </b:form>
+
+            <b:modal id="modalVisualizaUsuario" title="Dados do Usuario">
+                <b:well>
+                    <h5>#{usuariosController.selUsuario.login}</h5>
+                    #{usuariosController.selUsuario.nome}
+                    #{usuariosController.selUsuario.telefone1}
+                    #{usuariosController.selUsuario.telefone2}
+                </b:well>
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column large-screen='2'>
+                            Coquetel_ID
+                        </b:column>
+                        <b:column large-screen='4'>
+                            Nome
+                        </b:column>
+                        <b:column large-screen='2'>
+                            Preco
+                        </b:column>
+                    </b:row>
+                    <ui:repeat var="item" value="#{usuariosController.selUsuario.coqueteisCriados}">
+                        <b:row>
+                            <b:column medium-screen='2'>
+                                #{item.id}
+                            </b:column>
+                            <b:column medium-screen='4'>
+                                #{item.nome}
+                            </b:column>
+                            <b:column medium-screen='4'>
+                                #{item.preco}
+                            </b:column>
+                        </b:row>
+                    </ui:repeat>
+                </b:container>
+            </b:modal>
+        </c:if>
+    </h:body>
+</html>
+

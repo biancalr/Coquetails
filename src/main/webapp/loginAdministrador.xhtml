@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <title>Login Administrador</title>
     </h:head>
@@ -17,21 +17,21 @@
         <b:messages id="messages" show-detail="true" show-summary="true"/>
 
         <p:dialog id="mainDialog" modal="false" draggable="false" visible="true"
-                  header="Realizar Login Administrador">
+                  header="Login Administrador">
             <b:form>
-                <b:panelGrid columns="2">
+                <p:panelGrid columns="2">
                     <h:outputText value="Login:"/>
-                    <b:inputText value="#{login}"/>
-
+                    <p:inputText value="#{login}"/>
+                    
                     <h:outputText value="Senha:"/>
-                    <b:inputText value="#{senha}" type="password"/>
-
-                    <b:commandButton value="logar"
+                    <p:inputText value="#{senha}"/>
+                    
+                    <p:commandButton value="logar"
                                      action="#{loginAdministradorController.
                                                realizarLoginAdministrador(login, senha)}"
                                      update=":gro :messages mainDialog"
-                                     look="info"/>
-                </b:panelGrid>
+                                     />
+                </p:panelGrid>
             </b:form>
         </p:dialog>
 

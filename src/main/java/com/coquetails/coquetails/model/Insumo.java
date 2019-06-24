@@ -6,6 +6,7 @@
 package com.coquetails.coquetails.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -69,6 +70,36 @@ public class Insumo implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
+    /**
+     *
+     * @return the created hash
+     */
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    /**
+     *
+     * @param obj
+     * @return true if equals. Or false if it isn't equals
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Insumo other = (Insumo) obj;
+        return Objects.equals(this.id, other.id);
+    }
     
 }

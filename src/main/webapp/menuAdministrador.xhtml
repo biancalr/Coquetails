@@ -10,9 +10,9 @@
         <title>Menu Administrador</title>
     </h:head>
     <h:body>
-        <c:if test="#{loginAdministradorController.admnistradorLogado == null}">
+        <!--c:if test=""">
             <script>location.href = 'loginAdministrador.xhtml';</script>
-        </c:if>
+        </c:if-->
         
 
         <b:form>
@@ -23,21 +23,24 @@
                 <p:menuitem value="Visualizar Usuários" outcome="apresentarUsuarios.xhtml" icon="fa fa-users Blue">
                     <f:param name="i" value="1" />
                 </p:menuitem>
-                <p:menuitem value="Criar Coquetel" outcome="createCoquetel.xhtml" icon="fa fa-lemon-o Blue">
+                <p:menuitem value="Criar Coquetel" outcome="createCoquetel.xhtml" icon=" fa fa-lemon-o Blue">
                     <f:param name="i" value="2" />
                 </p:menuitem>
-                <p:menuitem value="Carrinho" outcome="createPedido.xhtml" icon="fa fa-cart-plus Blue">
+                <p:menuitem value="Criar Insumo" outcome="createInsumo.xhtml" icon="fa fa-lemon-o Blue">
                     <f:param name="i" value="3" />
                 </p:menuitem>
-                <p:menuitem value="Visualizar Coqueteis" outcome="apresentarCoqueteis.xhtml" icon="fa fa-glass Blue">
+                <p:menuitem value="Carrinho" outcome="createPedido.xhtml" icon="fa fa-cart-plus Blue">
                     <f:param name="i" value="4" />
                 </p:menuitem>
-                <p:menuitem value="Visualizar Pedidos" outcome="apresentarPedidos.xhtml" icon="fa fa-list-ol Blue">
+                <p:menuitem value="Visualizar Coqueteis" outcome="apresentarCoqueteis.xhtml" icon="fa fa-glass Blue">
                     <f:param name="i" value="5" />
+                </p:menuitem>
+                <p:menuitem value="Visualizar Pedidos" outcome="apresentarPedidos.xhtml" icon="fa fa-list-ol Blue">
+                    <f:param name="i" value="6" />
                 </p:menuitem>
                 <p:menuitem value="logout" onclick="ajax:loginAdministradorController.logout()" icon="fa fa-sign-out Blue"
                             outcome="loginAdministrador.xhtml">
-                    <f:param name="i" value="6" />
+                    <f:param name="i" value="7" />
                 </p:menuitem>
             </p:tabMenu>
         </b:form>

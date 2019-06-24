@@ -27,7 +27,7 @@ public class ItemCoquetel implements Serializable {
     private String nome;
 
     @NotNull
-    @DecimalMin(value = "0.1")
+    @DecimalMin(value = "0.0")
     private double preco;
     
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
@@ -36,8 +36,9 @@ public class ItemCoquetel implements Serializable {
             nullable = false)
     private Coquetel coquetel;
     
-    @Enumerated(EnumType.STRING)
-    private TipoItemReceita tipoItemReceita;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+            orphanRemoval = false, optional = false)
+    private Insumo insumo;
 
     public long getId() {
         return id;
@@ -63,12 +64,12 @@ public class ItemCoquetel implements Serializable {
         this.preco = preco;
     }
 
-    public TipoItemReceita getTipoItemReceita() {
-        return tipoItemReceita;
+    public Insumo getInsumo() {
+        return insumo;
     }
 
-    public void setTipoItemReceita(TipoItemReceita tipoItemReceita) {
-        this.tipoItemReceita = tipoItemReceita;
+    public void setInsumo(Insumo insumo) {
+        this.insumo = insumo;
     }
 
     public Coquetel getCoquetel() {
@@ -77,6 +78,12 @@ public class ItemCoquetel implements Serializable {
 
     public void setCoquetel(Coquetel coquetel) {
         this.coquetel = coquetel;
+    }
+    
+    public static double truncar(double numero) {
+        int n = (int) (numero * Math.pow(10.0, 2));
+        numero = n / Math.pow(10.0, 2);
+        return numero;
     }
 
     @Override

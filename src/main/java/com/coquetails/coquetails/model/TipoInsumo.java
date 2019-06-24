@@ -9,18 +9,18 @@ package com.coquetails.coquetails.model;
  *
  * @author bibil
  */
-public enum TipoItemReceita {
+public enum TipoInsumo {
     FRUTA("fruta"),
     SUCO("suco"),
     BEBIDA("bebida"),
     EXTRA("extra");
     
     private String tipoItemReceita;
-    private TipoItemReceita() {
+    private TipoInsumo() {
         
     }
     
-    private TipoItemReceita(String tipoItemReceita) {
+    private TipoInsumo(String tipoItemReceita) {
         this.tipoItemReceita = tipoItemReceita;
     }
 
@@ -32,19 +32,19 @@ public enum TipoItemReceita {
         this.tipoItemReceita = tipoItemReceita;
     }
 
-    public static TipoItemReceita getEXTRA() {
+    public static TipoInsumo getEXTRA() {
         return EXTRA;
     }
 
-    public static TipoItemReceita getFRUTA() {
+    public static TipoInsumo getFRUTA() {
         return FRUTA;
     }
 
-    public static TipoItemReceita getSUCO() {
+    public static TipoInsumo getSUCO() {
         return SUCO;
     }
 
-    public static TipoItemReceita getBEBIDA() {
+    public static TipoInsumo getBEBIDA() {
         return BEBIDA;
     }
 

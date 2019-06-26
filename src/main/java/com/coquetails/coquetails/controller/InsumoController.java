@@ -7,6 +7,7 @@ package com.coquetails.coquetails.controller;
 
 import com.coquetails.coquetails.dao.ManagerDao;
 import com.coquetails.coquetails.model.Insumo;
+import com.coquetails.coquetails.model.TipoInsumo;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -29,11 +30,19 @@ public class InsumoController {
         this.insumo = new Insumo();
     }
     
-    public void inserir(){
-        ManagerDao.getCurrentInstance().insert(this.insumo);
-        this.insumo = new Insumo();
+    public String inserir(Insumo cadInsumo, String tipoInsumo){
+        cadInsumo.setTipoInsumo(TipoInsumo.valueOf(tipoInsumo));
+        ManagerDao.getCurrentInstance().insert(cadInsumo);
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage("Insumo adicionado com sucesso"));
+        return "apresentarInsumos.xhtml";
+    }
+    
+    public String inserir(Insumo cadInsumo){
+        ManagerDao.getCurrentInstance().insert(cadInsumo);
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage("Insumo adicionado com sucesso"));
+        return "apresentarInsumos.xhtml";
     }
     
     public void alterar(){
@@ -46,6 +55,18 @@ public class InsumoController {
         ManagerDao.getCurrentInstance().delete(this.selInsumo);
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage("Insumo removido com sucesso"));
+    }
+    
+    public Insumo findInsumo(String id){
+        try {
+            return (Insumo)ManagerDao.getCurrentInstance().read(
+                    "Select i From Insumo where i.id='" + id + "'",
+                    Insumo.class).get(0);
+        } catch (Exception e) {
+            System.out.println("com.coquetails.coquetails.controller.InsumoController.findInsumo()");
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
     
     public List<Insumo> lerTudo(){

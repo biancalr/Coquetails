@@ -6,6 +6,7 @@
 package com.coquetails.coquetails.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -52,7 +53,7 @@ public class Coquetel extends Bebida implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
              optional = true, targetEntity = Usuario.class)
     @JoinColumn(name = "id_cliente", referencedColumnName = "ID",
-            nullable = false)
+            nullable = true)
     protected Usuario criador;
 
     public Coquetel() {
@@ -62,7 +63,7 @@ public class Coquetel extends Bebida implements Serializable {
     public double getPrecoItensReceita() {
         Double valor = null;
         for (ItemCoquetel itemCoquetel : itensCoquetel) {
-            valor += itemCoquetel.getPreco();
+            valor += itemCoquetel.getCoquetel().getPreco();
         }
         return valor;
     }
@@ -71,8 +72,31 @@ public class Coquetel extends Bebida implements Serializable {
         return comentario;
     }
 
-    public void setComentario(List comentario) {
+    public void setComentario(List<String> comentario) {
         this.comentario = comentario;
+    }
+    
+    public void addComentario(String comentario){
+        if(this.comentario == null){
+            this.comentario = new ArrayList<>();
+        }
+        this.comentario.add(comentario);
+    }
+    
+    public boolean removeComentario(String comentario){
+        return this.comentario.remove(comentario);
+    }
+    
+    public void addItemCoquetel(ItemCoquetel itemCoquetel){
+        if(this.itensCoquetel == null){
+            this.comentario = new ArrayList<>();
+        }
+        itemCoquetel.setCoquetel(this);
+        this.itensCoquetel.add(itemCoquetel);
+    }
+    
+    public boolean removeComentario(ItemCoquetel itemCoquetel){
+        return this.itensCoquetel.remove(itemCoquetel);
     }
 
     public Boolean getCriacaoInterna() {
@@ -90,7 +114,5 @@ public class Coquetel extends Bebida implements Serializable {
     public void setCriador(Usuario criador) {
         this.criador = criador;
     }
-    
-    
 
 }

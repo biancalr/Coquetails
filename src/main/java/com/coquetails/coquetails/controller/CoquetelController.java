@@ -6,10 +6,12 @@
 package com.coquetails.coquetails.controller;
 
 import com.coquetails.coquetails.dao.ManagerDao;
-import com.coquetails.coquetails.model.Usuario;
 import com.coquetails.coquetails.model.Coquetel;
+import com.coquetails.coquetails.model.Insumo;
+import com.coquetails.coquetails.model.ItemCoquetel;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -25,6 +27,14 @@ public class CoquetelController implements Serializable{
     
     private Coquetel coquetel;
     private Coquetel selCoquetel;
+    private ItemCoquetel itemCoquetel;
+    private ItemCoquetel selItemCoquetel;
+    
+    @PostConstruct
+    public void init() {
+        this.coquetel = new Coquetel();
+        this.itemCoquetel = new ItemCoquetel();
+    }
 
     public Coquetel getCoquetel() {
         return coquetel;
@@ -42,16 +52,22 @@ public class CoquetelController implements Serializable{
         this.selCoquetel = selCoquetel;
     }
     
-    public void inserir(){
-        if (this.coquetel.getCriador().getClass() == Usuario.class) {
-            this.coquetel.setCriacaoInterna(false);
-        }else{
-            this.coquetel.setCriacaoInterna(true);
-        }
+    public String inserir(Coquetel cadCoquetel, boolean criacaoInterna){
+        cadCoquetel.setCriacaoInterna(criacaoInterna);
         ManagerDao.getCurrentInstance().insert(this.coquetel);
         this.coquetel = new Coquetel();
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage("Coquetel inserido com sucesso"));
+        return "apresentarCoqueteis.xhtml";
+    }
+    
+    public void inserirInsumoItem(Object insumo){
+        this.itemCoquetel.setInsumo((Insumo) insumo);
+    }
+    
+    public void inserirItemCoquetel(Coquetel cadCoquetel){
+        cadCoquetel.addItemCoquetel(itemCoquetel);
+        this.itemCoquetel = new ItemCoquetel();
     }
     
     public void alterar(){
@@ -78,6 +94,22 @@ public class CoquetelController implements Serializable{
         return ManagerDao.getCurrentInstance().
                 read("Select c from Coquetel c where c.criacaoInterna='false'", 
                         Coquetel.class);
+    }
+
+    public ItemCoquetel getItemCoquetel() {
+        return itemCoquetel;
+    }
+
+    public void setItemCoquetel(ItemCoquetel itemCoquetel) {
+        this.itemCoquetel = itemCoquetel;
+    }
+
+    public ItemCoquetel getSelItemCoquetel() {
+        return selItemCoquetel;
+    }
+
+    public void setSelItemCoquetel(ItemCoquetel selItemCoquetel) {
+        this.selItemCoquetel = selItemCoquetel;
     }
     
 }

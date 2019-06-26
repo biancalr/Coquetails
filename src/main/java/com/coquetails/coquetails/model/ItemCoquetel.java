@@ -22,13 +22,9 @@ public class ItemCoquetel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @NotBlank
-    private String nome;
-
-    @NotNull
-    @DecimalMin(value = "0.0")
-    private double preco;
+    
+    @Min(value = 1)
+    private int quantidade;
     
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             optional = false)
@@ -48,22 +44,6 @@ public class ItemCoquetel implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-
     public Insumo getInsumo() {
         return insumo;
     }
@@ -78,6 +58,14 @@ public class ItemCoquetel implements Serializable {
 
     public void setCoquetel(Coquetel coquetel) {
         this.coquetel = coquetel;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
     
     public static double truncar(double numero) {

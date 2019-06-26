@@ -15,21 +15,21 @@ public enum TipoInsumo {
     BEBIDA("bebida"),
     EXTRA("extra");
     
-    private String tipoItemReceita;
-    private TipoInsumo() {
+    private String tipoItemInsumo;
+    TipoInsumo() {
         
     }
     
-    private TipoInsumo(String tipoItemReceita) {
-        this.tipoItemReceita = tipoItemReceita;
+    TipoInsumo(String tipoItemInsumo) {
+        this.tipoItemInsumo = tipoItemInsumo;
     }
 
-    public String getTipoItemReceita() {
-        return tipoItemReceita;
+    public String getTipoItemInsumo() {
+        return tipoItemInsumo;
     }
 
-    public void setTipoItemReceita(String tipoItemReceita) {
-        this.tipoItemReceita = tipoItemReceita;
+    public void setTipoItemInsumo(String tipoItemInsumo) {
+        this.tipoItemInsumo = tipoItemInsumo;
     }
 
     public static TipoInsumo getEXTRA() {
@@ -50,7 +50,7 @@ public enum TipoInsumo {
 
     @Override
     public String toString() {
-        String sb = "Tipo do Item: " + tipoItemReceita;
+        String sb = "Tipo do Item: " + tipoItemInsumo;
         return sb;
     }
     

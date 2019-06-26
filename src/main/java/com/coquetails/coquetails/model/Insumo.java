@@ -10,6 +10,8 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,13 +33,17 @@ public class Insumo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull
+    @Enumerated(EnumType.STRING)
     private TipoInsumo tipoInsumo;
     
     @NotBlank
     private String nomeInsumo;
     
     private String descricao;
+    
+    @NotNull
+    @DecimalMin(value = "0.0")
+    private double preco;
     
     public Long getId() {
         return id;
@@ -69,6 +75,14 @@ public class Insumo implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 
     /**

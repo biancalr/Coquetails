@@ -12,23 +12,26 @@
             <script>location.href = 'loginAdministrador.xhtml';</script>
         </c:if-->
         
+
         <b:form>
             <b:navBar brand="Home" brandHref="indexAdministrador.xhtml" fluid="true">
                 <b:navbarLinks>
-                    <b:navLink value="Usuários" href="apresentarUsuarios.xhtml"></b:navLink>
-                    <b:dropMenu value="Coquetéis">
+                    <b:navLink value="Usuários" href="apresentarUsuarios.xhtml"
+                               iconAwesome="fa-users"></b:navLink>
+                    <b:dropMenu value="Coquetéis" icon="glass">
                         <b:navLink value="Criar Coquetel" href="createCoquetel.xhtml"></b:navLink>
                         <b:navLink value="Ver Coquetéis" href="apresentarCoqueteis.xhtml"></b:navLink>
                     </b:dropMenu>
-                    <b:dropMenu value="Insumos">
+                    <b:dropMenu value="Insumos" iconAwesome="fa-lemon-o">
                         <b:navLink value="Criar Insumo" href="createInsumo.xhtml"></b:navLink>
                         <b:navLink value="Ver Insumos" href="apresentarInsumos.xhtml"></b:navLink>
                     </b:dropMenu>
-                    <b:dropMenu value="Pedidos">
+                    <b:dropMenu value="Pedidos" iconAwesome="fa-cart-plus">
                         <b:navLink value="Criar Pedido" href="createPedido.xhtml"></b:navLink>
                         <b:navLink value="Ver Pedidos" href="apresentarPedidos.xhtml"></b:navLink>
                     </b:dropMenu>
-                    <b:navLink value="logout" onclick="ajax:loginAdministradorController.logout()"
+                    <b:navLink value="logout" iconAwesome="fa-user-times"
+                               onclick="ajax:loginAdministradorController.logout()"
                                href="loginAdministrador.xhtml"/>
                 </b:navbarLinks>
             </b:navBar>

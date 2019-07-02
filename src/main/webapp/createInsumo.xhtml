@@ -43,15 +43,15 @@
                         <b:selectOneMenu id="txtTipoInsumo" 
                                          value="tipoInsumo" label="Tipo do ingrediente">
                             <f:selectItem itemLabel="(Selecione um Tipo)"/>
-                            <f:selectItem itemLabel="Fruta" itemValue="FRUTA"/>
-                            <f:selectItem itemLabel="Suco" itemValue="SUCO"/>
-                            <f:selectItem itemLabel="Bebida" itemValue="BEBIDA"/>
-                            <f:selectItem itemLabel="Extra" itemValue="EXTRA"/>
+                            <f:selectItem itemLabel="Fruta" itemValue="1"/>
+                            <f:selectItem itemLabel="Suco" itemValue="2"/>
+                            <f:selectItem itemLabel="Bebida" itemValue="3"/>
+                            <f:selectItem itemLabel="Extra" itemValue="4"/>
                         </b:selectOneMenu>
                     </b:formGroup>
                     <br/><br/><br/><br/><br/>
                 </b:panelGrid>
-                <b:commandButton value="registrar" action="#{insumosController.inserir(cadInsumo)}"
+                <b:commandButton value="registrar" action="#{insumosController.inserir(cadInsumo, tipoInsumo)}"
                                  update="@form :gro"/>
             </b:panel>
         </b:form>

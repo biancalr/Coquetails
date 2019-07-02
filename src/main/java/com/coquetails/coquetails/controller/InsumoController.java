@@ -30,12 +30,37 @@ public class InsumoController {
         this.insumo = new Insumo();
     }
     
-    public String inserir(Insumo cadInsumo, String tipoInsumo){
-        cadInsumo.setTipoInsumo(TipoInsumo.valueOf(tipoInsumo));
+    public String inserir(Insumo cadInsumo, int tipoInsumo){
+        TipoInsumo tipo = addTiponsuInsumo(tipoInsumo);
+        System.out.println("tipoInsumo " + tipo);
+        cadInsumo.setTipoInsumo(tipo);
         ManagerDao.getCurrentInstance().insert(cadInsumo);
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage("Insumo adicionado com sucesso"));
         return "apresentarInsumos.xhtml";
+    }
+    
+    public TipoInsumo addTiponsuInsumo(int tipoInsumo){
+        TipoInsumo tipo;
+        switch(tipoInsumo){
+            case 1:
+                tipo = TipoInsumo.getFRUTA();
+                break;
+            case 2:
+                tipo = TipoInsumo.getSUCO();
+                break;
+            case 3:
+                tipo = TipoInsumo.getBEBIDA();
+                break;
+            case 4:
+                tipo =  TipoInsumo.getEXTRA();
+                break;
+            default:
+                FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage("Tipo não reconhecido"));
+                return null;
+        }
+        return tipo;
     }
     
     public String inserir(Insumo cadInsumo){

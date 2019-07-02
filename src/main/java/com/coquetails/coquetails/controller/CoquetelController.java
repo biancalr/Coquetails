@@ -29,11 +29,14 @@ public class CoquetelController implements Serializable{
     private Coquetel selCoquetel;
     private ItemCoquetel itemCoquetel;
     private ItemCoquetel selItemCoquetel;
+    private Insumo insumo;
+    private Insumo selInsumo;
     
     @PostConstruct
     public void init() {
         this.coquetel = new Coquetel();
         this.itemCoquetel = new ItemCoquetel();
+        this.insumo = new Insumo();
     }
 
     public Coquetel getCoquetel() {
@@ -61,13 +64,12 @@ public class CoquetelController implements Serializable{
         return "apresentarCoqueteis.xhtml";
     }
     
-    public void inserirInsumoItem(Object insumo){
-        this.itemCoquetel.setInsumo((Insumo) insumo);
+    public void inserirInsumoItem(ItemCoquetel cadItemCoquetel, Insumo insumo){
+        cadItemCoquetel.setInsumo(insumo);
     }
     
-    public void inserirItemCoquetel(Coquetel cadCoquetel){
-        cadCoquetel.addItemCoquetel(itemCoquetel);
-        this.itemCoquetel = new ItemCoquetel();
+    public void inserirItemCoquetel(Coquetel cadCoquetel, ItemCoquetel cadItemCoquetel){
+        cadCoquetel.addItemCoquetel(cadItemCoquetel);
     }
     
     public void alterar(){
@@ -110,6 +112,22 @@ public class CoquetelController implements Serializable{
 
     public void setSelItemCoquetel(ItemCoquetel selItemCoquetel) {
         this.selItemCoquetel = selItemCoquetel;
+    }
+
+    public Insumo getInsumo() {
+        return insumo;
+    }
+
+    public void setInsumo(Insumo insumo) {
+        this.insumo = insumo;
+    }
+
+    public Insumo getSelInsumo() {
+        return selInsumo;
+    }
+
+    public void setSelInsumo(Insumo selInsumo) {
+        this.selInsumo = selInsumo;
     }
     
 }

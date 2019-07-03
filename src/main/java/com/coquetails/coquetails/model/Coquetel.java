@@ -68,7 +68,7 @@ public class Coquetel extends Bebida implements Serializable {
         return valor;
     }
 
-    public List getComentario() {
+    public List<String> getComentario() {
         return comentario;
     }
 
@@ -95,7 +95,7 @@ public class Coquetel extends Bebida implements Serializable {
         this.itensCoquetel.add(itemCoquetel);
     }
     
-    public boolean removeComentario(ItemCoquetel itemCoquetel){
+    public boolean removeItemCoquetel(ItemCoquetel itemCoquetel){
         return this.itensCoquetel.remove(itemCoquetel);
     }
 
@@ -113,6 +113,14 @@ public class Coquetel extends Bebida implements Serializable {
 
     public void setCriador(Usuario criador) {
         this.criador = criador;
+    }
+
+    public List<ItemCoquetel> getItensCoquetel() {
+        return itensCoquetel;
+    }
+
+    public void setItensCoquetel(List<ItemCoquetel> itensCoquetel) {
+        this.itensCoquetel = itensCoquetel;
     }
 
 }

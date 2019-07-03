@@ -14,6 +14,8 @@
         <ui:include src="menuAdministrador.xhtml"/>
         <g:createObject varClass="com.coquetails.coquetails.model.Coquetel" 
                         varName="cadCoquetel" varScope="session"/>
+        <g:createObject varClass="com.coquetails.coquetails.model.ItemCoquetel" 
+                        varName="cadItemCoquetel" varScope="session"/>
         <b:growl id="gro" delay="4000"/>
         <b:form id="formCreateCoquetel">
             <b:panel title="Coquetel">
@@ -23,31 +25,56 @@
                                  required="true" required-message="Nome Obrigatório"/>
                     <b:message for="txtNomeBebida"/>
 
+                    <h:outputText value="Preço do Coquetel"/>
+                    <b:inputText id="txtPrecoBebida" value="#{cadCoquetel.preco}"
+                                 required="true" required-message="Preço Obrigatório">
+                        <f:facet name="prepend">
+                            <h:outputText value="R$" />
+                        </f:facet>
+                    </b:inputText>
+                    <b:message for="txtPrecoBebida"/>
+
+                    <h:outputText value="Unidade da Garrafa"/>
+                    <b:formGroup>
+                        <b:selectOneMenu id="txtUnidadeGarrafa" required="false"
+                                         value="#{unidadeGarrafa}">
+                            <f:selectItem itemLabel="(Selecione um Volume)"/>
+                            <f:selectItem itemLabel="300 mL" itemValue="1"/>
+                            <f:selectItem itemLabel="350 mL" itemValue="2"/>
+                            <f:selectItem itemLabel="600 mL" itemValue="3"/>
+                            <f:selectItem itemLabel="1 Litro" itemValue="4"/>
+                            <f:selectItem itemLabel="1,5 Litro" itemValue="5"/>
+                            <f:selectItem itemLabel="2 Litros" itemValue="6"/>
+                        </b:selectOneMenu>
+                    </b:formGroup>
+                    <h:outputText value=""/>
+
                     <h:outputText value="Selecione os ingredientes"/>
                     <b:commandButton value="Ingredientes" oncomplete="$('#modalInserirIngredientes').modal('show')"
-                                     update=":formCreateCoquetel" iconAwesome="fa-plus">
-                    </b:commandButton>
-                    <h:outputText value="Ingredientes Selecionados"/>
-                    <ui:repeat var="item" value="#{coqueteisController.itemCoquetel}">
-                        <h:outputText value="#{item.insumo.nomeInsumo}"/>
-                        <h:outputText value="#{item.insumo.preco}"/>
-                        <h:outputText value="#{item.quantidade}"/>
-                        <br/><br/><br/><br/>
-                    </ui:repeat>
+                                     update=":formCreateCoquetel" iconAwesome="fa-plus"/>
+                    <h:outputText value=""/>
 
-                    <b:commandButton value="Criar" action="#{coqueteisController.inserir(cadCoquetel, true)}"
-                                     update="@form :gro"/>
+                    <h:outputText value="Ingredientes Selecionados"/>
+                    <b:button onclick="$('#modalVisualizaIngredientes').modal('show')"
+                              iconAwesome="fa-eye"/>
+                    <h:outputText value=""/>
+
+                    <h:outputText value="Instruções"/>
+                    <b:button iconAwesome="fa-file-text" onclick="$('#modalAcaoIntrucao').modal('show')"/>
+                    <h:outputText value=""/>
+
+                    <b:commandButton value="Criar" action="#{coqueteisController.inserir(cadCoquetel, unidadeGarrafa, true)}"
+                                     update="@form :gro :formModalInserirIngredientes"/>
+                    <h:outputText value=""/>
 
                 </b:panelGrid>
             </b:panel>
         </b:form>
 
         <b:modal id="modalInserirIngredientes">
-            <g:createObject varClass="com.coquetails.coquetails.model.ItemCoquetel" 
-                            varName="cadItemCoquetel" varScope="session"/>
-            <b:form id="formModalSelIngredientes">
+            <b:form id="formModalInserirIngredientes">
                 <b:panel title="Coquetel">
-                    <b:panelGrid columns="6">
+                    <b:panelGrid columns="3">
                         <h:outputText value="Quantidade:"/>
                         <b:inputText id="intItemCoquetelQuantidade" value="#{cadItemCoquetel.quantidade}"
                                      type="number" required="true" required-message="Quantidade Obrigatória"/>
@@ -55,33 +82,171 @@
                     </b:panelGrid>
                     <p:separator/>
                     <b:panelGrid columns="12">
-                        <b:dataTable id="tableIngredientes" var="item"
-                                     caption="Ingrediente" select="true" selectionMode="single"
+                        <b:dataTable id="tableIngredientes" var="insumo"
+                                     caption="Ingrediente"
                                      value="#{insumosController.lerTudo()}"
                                      page-length="5">
-                            <b:dataTableColumn label="Nome" value="#{item.nomeInsumo}"/>
-                            <b:dataTableColumn label="Preço" value="#{item.preco}"/>
-                            <b:dataTableColumn label="Tipo" value="#{item.tipoInsumo.tipoItemInsumo}"/>
-                            <b:dataTableColumn label="Descrição" value="#{item.descricao}"/>
+                            <b:dataTableColumn label="Nome" value="#{insumo.nomeInsumo}"/>
+                            <b:dataTableColumn label="Preço" value="#{insumo.preco}"/>
+                            <b:dataTableColumn label="Tipo" value="#{insumo.tipoInsumo.tipoItemInsumo}"/>
+                            <b:dataTableColumn label="Descrição" value="#{insumo.descricao}"/>
                             <b:dataTableColumn label="Selecionar">
                                 <b:commandButton look="success" iconAwesome="fa-check"
-                                                 action="#{coqueteisController.inserirInsumoItem(cadItemCoquetel, item)}"
-                                                 update=":gro">
-                                    <f:setPropertyActionListener value="#{item}"
-                                                                 target="#{coqueteisController.selInsumo}"/>
-                                </b:commandButton>
+                                                 action="#{coqueteisController.inserirInsumoItem(cadItemCoquetel, insumo)}"
+                                                 update=":gro"/>
                             </b:dataTableColumn>
                         </b:dataTable>
                     </b:panelGrid>
                     <b:commandButton value="Adicionar" action="#{coqueteisController.inserirItemCoquetel(cadCoquetel, cadItemCoquetel)}"
                                      update=":gro :formCreateCoquetel @form"
-                                     onclick="$('#modalInserirIngredientes').modal('hide')">
-                        <f:setPropertyActionListener value="#{cadItemCoquetel}"
-                                                     target="#{coqueteisController.selItemCoquetel}"/>
-                    </b:commandButton>
+                                     oncomplete="$('#modalInserirIngredientes').modal('hide')"/>
                     <b:button value="Cancelar" look="primary" iconAwesome="fa-close"
                               onclick="$('#modalInserirIngredientes').modal('hide')"/>
                 </b:panel>
+            </b:form>
+        </b:modal>
+
+        <b:modal id="modalVisualizaIngredientes" title="Ingredientes Selecionados">
+            <b:container fluid="true">
+                <b:form id="formModalVisualizaIngredientes">
+                    <b:row>
+                        <b:column>
+                            ID
+                        </b:column>
+                        <b:column>
+                            Nome
+                        </b:column>
+                        <b:column>
+                            Quantidade
+                        </b:column>
+                        <b:column>
+                            Preço
+                        </b:column>
+                        <b:column>
+                            Descrição
+                        </b:column>
+                        <b:column>
+                            Tipo do Ingrediente
+                        </b:column>
+                        <b:column>
+                            Ação
+                        </b:column>
+                    </b:row>
+                    <ui:repeat var="itemCoquetel" value="#{cadCoquetel.itensCoquetel}">
+                        <b:row>
+                            <b:column>
+                                #{item.insumo.id}
+                            </b:column>
+                            <b:column>
+                                #{item.insumo.nomeInsumo}
+                            </b:column>
+                            <b:column>
+                                #{item.quantidade}
+                            </b:column>
+                            <b:column>
+                                #{item.insumo.preco}
+                            </b:column>
+                            <b:column>
+                                #{item.insumo.descricao}
+                            </b:column>
+                            <b:column>
+                                #{item.insumo.tipoInsumo}
+                            </b:column>
+                            <b:column>
+                                <b:commandButton look="primary" icon="trash"
+                                                 action="#{coqueteisController.coquetel.removeItemCoquetel(itemCoquetel)}"
+                                                 update="@form :formCreateCoquetel"/>
+                            </b:column>
+                        </b:row>
+                        <p:separator/>
+                    </ui:repeat>
+                    <b:commandButton value="fechar" look="primary"
+                                     onclick="$('#modalVisualizaIngredientes').modal('hide')"/>
+                </b:form>
+            </b:container>
+        </b:modal>
+
+        <b:modal id="modalAcaoIntrucao" title="Opção de Instrução">
+            <b:container fluid="true">
+                <b:panelGrid columns="3">
+                    <h:outputText value="Visualizar"/>
+                    <b:button iconAwesome="fa-eye" look="primary"
+                              onclick="$('#modalVisualizaInstrucao').modal('show')"/>
+                    <h:outputText value=""/>
+                    <h:outputText value="Criar"/>
+                    <b:button iconAwesome="fa-plus" look="primary"
+                              onclick="$('#modalInserirInstrucao').modal('show')"/>
+                </b:panelGrid>
+            </b:container>
+            <br/><br/><br/>
+            <b:button value="fechar" 
+                      onclick="$('#modalAcaoIntrucao').modal('hide')"/>
+        </b:modal>
+
+        <b:modal id="modalVisualizaInstrucao">
+            <b:container fluid="true">
+                <b:form id="formModalVisualizaInstrucao">
+                    <b:dataTable id="tableInstrucao" var="instrucaoCoquetel"
+                                 value="#{cadCoquetel.comentario}">
+                        <b:dataTableColumn label="Operações">
+                            <b:commandButton icon="pencil"
+                                             oncomplete="$('#modalAlterarInstrucao').modal('show')"
+                                             update="@form :gro">
+                                <f:setPropertyActionListener value="instrucaoCoquetel"
+                                                             target="#{coqueteisController.comentario}"/>
+                            </b:commandButton>
+                            <b:commandButton look="primary" icon="trash"
+                                             action="#{coqueteisController.removerComentario(cadCoquetel, instrucaoCoquetel)}"
+                                             update="@form :formCreateCoquetel"/>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="comentario" value="#{instrucaoCoquetel}"/>
+                    </b:dataTable>
+                </b:form>
+            </b:container>
+            <b:button iconAwesome="fa-close" look="primary"
+                      onclick="$('#modalVisualizaInstrucao').modal('hide')"/>
+        </b:modal>
+
+        <b:modal id="modalInserirInstrucao" title="Inserir nova Instrução">
+            <b:form id="formModalInserirInstrucao">
+                <b:container>
+                    <h:outputText value="Insira a instrução"/>
+                    <p:panelGrid>
+                        <b:inputTextarea value="#{coqueteisController.comentario}"/>
+                    </p:panelGrid>
+                    <b:commandButton value="Adicionar" look="primary"
+                                     iconAwesome="fa-check-square-o"
+                                     update="@form :gro
+                                     :modalVisualizaInstrucao :formModalVisualizaInstrucao
+                                     :modalInserirInstrucao"
+                                     oncomplete="$('#modalInserirInstrucao').modal('hide')"
+                                     action="#{coqueteisController.inserirComentario(cadCoquetel, comentario)}"/>
+                    <b:button value="cancelar" iconAwesome="fa-close"
+                              onclick="$('#modalInserirInstrucao').modal('hide')"/>
+                </b:container>
+            </b:form>
+        </b:modal>
+
+        <b:modal id="modalAlterarInstrucao">
+            <b:form id="formModalAlterarInstrucao">
+                <b:container fluid="true">
+                    <b:panel>
+                        <h:outputText value="Instrução"/>
+                        <b:inputTextarea value="#{coqueteisController.comentario}"/>
+                        <b:commandButton value="alterar" look="success"
+                                         action="#{coqueteisController.removerComentario(cadCoquetel, coqueteisController.comentario)}
+                                         #{coqueteisController.inserirComentario(cadCoquetel, coqueteisController.comentario)}"
+                                         update=":formModalVisualizaInstrucao
+                                         :modalVisualizaInstrucao
+                                         :formCreateCoquetel
+                                         :gro
+                                         :modalInserirInstrucao
+                                         :formModalInserirInstrucao"
+                                         iconAwesome="fa-check-square-o"/>
+                        <b:button value="fechar" look="primary"
+                                  onclick="$('#modalAlterarInstrucao').modal('hide')"/>
+                    </b:panel>
+                </b:container>
             </b:form>
         </b:modal>
 

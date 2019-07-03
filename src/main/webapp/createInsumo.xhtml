@@ -39,9 +39,10 @@
                     <b:inputText id="txtInsumoDescricao" value="#{cadInsumo.descricao}"/>
                     <b:message for="txtInsumoDescricao"/>
 
+                    <h:outputText value="Tipo do Ingrediente"/>
                     <b:formGroup>
                         <b:selectOneMenu id="txtTipoInsumo" required="true"
-                                         value="#{tipoInsumo}" label="Tipo do ingrediente">
+                                         value="#{tipoInsumo}">
                             <f:selectItem itemLabel="(Selecione um Tipo)"/>
                             <f:selectItem itemLabel="Fruta" itemValue="1"/>
                             <f:selectItem itemLabel="Suco" itemValue="2"/>

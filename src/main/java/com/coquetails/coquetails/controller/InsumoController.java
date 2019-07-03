@@ -31,7 +31,7 @@ public class InsumoController {
     }
     
     public String inserir(Insumo cadInsumo, int tipoInsumo){
-        TipoInsumo tipo = addTiponsuInsumo(tipoInsumo);
+        TipoInsumo tipo = addTipoInsumo(tipoInsumo);
         System.out.println("tipoInsumo " + tipo);
         cadInsumo.setTipoInsumo(tipo);
         ManagerDao.getCurrentInstance().insert(cadInsumo);
@@ -40,7 +40,7 @@ public class InsumoController {
         return "apresentarInsumos.xhtml";
     }
     
-    public TipoInsumo addTiponsuInsumo(int tipoInsumo){
+    public TipoInsumo addTipoInsumo(int tipoInsumo){
         TipoInsumo tipo;
         switch(tipoInsumo){
             case 1:
@@ -68,6 +68,14 @@ public class InsumoController {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage("Insumo adicionado com sucesso"));
         return "apresentarInsumos.xhtml";
+    }
+    
+    public void alterar(int tipoInsumo){
+        TipoInsumo tipo = addTipoInsumo(tipoInsumo);
+        this.selInsumo.setTipoInsumo(tipo);
+        ManagerDao.getCurrentInstance().update(this.selInsumo);
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage("Insumo alterado com sucesso"));
     }
     
     public void alterar(){

@@ -17,7 +17,7 @@
             <b:dataTable id="tableInsumos" var="item" value="#{insumosController.lerTudo()}">
                 <b:dataTableColumn label="Código" value="#{item.id}"/>
                 <b:dataTableColumn label="Nome do Ingrediente" value="#{item.nomeInsumo}"/>
-                <b:dataTableColumn label="Preço" value="#{item.preco}"/>
+                <b:dataTableColumn label="Preço (R$)" value="#{item.preco}"/>
                 <b:dataTableColumn label="Tipo do Ingrediente" value="#{item.tipoInsumo.tipoItemInsumo}"/>
                 <b:dataTableColumn label="Descrição" value="#{item.descricao}"/>
                 <b:dataTableColumn label="Operações">

@@ -5,13 +5,13 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        
+
     </h:head>
     <h:body>
         <!--c:if test=""">
             <script>location.href = 'loginAdministrador.xhtml';</script>
         </c:if-->
-        
+
 
         <b:form>
             <b:navBar brand="Home" brandHref="indexAdministrador.xhtml" fluid="true">
@@ -26,10 +26,7 @@
                         <b:navLink value="Criar Insumo" href="createInsumo.xhtml"></b:navLink>
                         <b:navLink value="Ver Insumos" href="apresentarInsumos.xhtml"></b:navLink>
                     </b:dropMenu>
-                    <b:dropMenu value="Pedidos" iconAwesome="fa-cart-plus">
-                        <b:navLink value="Criar Pedido" href="createPedido.xhtml"></b:navLink>
-                        <b:navLink value="Ver Pedidos" href="apresentarPedidos.xhtml"></b:navLink>
-                    </b:dropMenu>
+                    <b:navLink value="Pedidos" iconAwesome="fa-cart-plus" href="apresentarPedidos.xhtml"></b:navLink>
                     <b:navLink value="logout" iconAwesome="fa-user-times"
                                onclick="ajax:loginAdministradorController.logout()"
                                href="loginAdministrador.xhtml"/>

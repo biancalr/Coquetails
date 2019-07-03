@@ -8,7 +8,6 @@ package com.coquetails.coquetails.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
